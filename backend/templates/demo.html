@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ace Editor with JavaScript Execution</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ext-language_tools.js"></script>
+</head>
+<body>
+    <div id="editor" style="height: 300px; width: 100%;"></div>
+    <button onclick="runCode()">Rfdgggggggggggun Code</button>
+    <div id="output" style="margin-top: 20px; border: 1px solid #ccc; padding: 10px;"></div>
+    lasdfkjlksajdf
+    <script>
+        // Initialize Ace Editor
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/javascript");
+        console.log('hello code eidtore')
+
+        // Enable language tools
+        ace.require("ace/ext/language_tools");
+        editor.setOptions({
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true,
+            enableSnippets: true
+        });
+
+        // Function to run the code
+        function runCode() {
+            var code = editor.getValue();
+            try {
+                var output = eval(code);
+                document.getElementById("output").innerText = output;
+            } catch (e) {
+                document.getElementById("output").innerText = "Error: " + e.message;
+            }
+        }
+    </script>
+</body>
+</html>

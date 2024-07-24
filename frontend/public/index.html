@@ -6,12 +6,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ext-language_tools.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ext-language_tools.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.12.4/brython.min.js" integrity="sha512-2uWY53z9lhFfey4iHT5Fof+/+DcfSSv9LIa4RYz6/yZ3FDMYohTcP7iH7uxsJ1vpkMYZPT4/jDTSqeh9Zetv1w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-modal/1.6.5/index.min.js" integrity="sha512-sK4qyWeGm10tV6RXhhR3zboMTJKeAw8KYW14ARp6s9Nmqbro/X5lkL8grCOkMUgTwM8ChesiK6iM7vm8QC7jMg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   </head>
-  <body>
+  <body onload="brython()">
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    
   </body>
 </html>

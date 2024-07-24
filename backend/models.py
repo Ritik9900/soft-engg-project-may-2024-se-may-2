@@ -38,6 +38,7 @@ class CodingQuestion(db.Model):
     id = db.Column(db.Integer, primary_key=True) 
     content = db.Column(db.Text, nullable=False)
     test_cases = db.Column(db.Text, nullable=False)  # Assuming JSON format for test cases
+    code_snippet = db.Column(db.Text, nullable=True)
     solution = db.Column(db.Text, nullable=True)  # Field for the solution
     week_id = db.Column(db.Integer, db.ForeignKey("week.id"), nullable=False)
     submissions = db.relationship("Submission", backref="coding_question", lazy=True)
