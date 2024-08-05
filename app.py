@@ -2,15 +2,28 @@ from flask import Flask
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from flask_restful import Api
-from backend.models import *
+import openai
+from backend.models import db
 from datetime import timedelta
+import configparser
+import os
+
 
 
 def start_app():
-    app = Flask(__name__, template_folder="templates")
+    app = Flask(__name__, template_folder="backend/templates")
     app.config["SECRET_KEY"] = "secret"
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///backend.db"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+
+    #For reading configuration files for OpenAI Key Credentials
+    config = configparser.ConfigParser()
+    config.read('backend/credentials.ini')
+
+    OPENAI_API_KEY = config.get('OpenAI', 'api_key')
+
+    #setting API key as environment variable
+    os.environ['OPENAI_API_KEY'] = OPENAI_API_KEY
 
     db.init_app(app)
     app.app_context().push()
@@ -21,10 +34,10 @@ def start_app():
 
     CORS(app)
 
-    # from backend.views import views
+    from backend.views import views
 
-    # with app.app_context():
-    #     app.register_blueprint(views, url_prefix="/")
+    with app.app_context():
+        app.register_blueprint(views, url_prefix="/")
 
     from backend.api import api_bp
 

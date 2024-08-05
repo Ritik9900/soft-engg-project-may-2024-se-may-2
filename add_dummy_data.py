@@ -9,9 +9,9 @@ with app.app_context():
 
     # Add courses
     courses = [
-        Course(name='Python Basics', description='Learn the basics of Python programming.'),
-        Course(name='Advanced Python', description='Deep dive into advanced Python concepts.'),
-        Course(name='Python for Data Science', description='Apply Python in the field of Data Science.')
+        Course(name='Python', description='Learn the basics of Python programming.'),
+        Course(name='Software Engineering', description='Learn the concepts of software engineering.'),
+        Course(name='AI:SMPS', description='Search Meethod For Problem Solving'),
     ]
 
     db.session.add_all(courses)
@@ -36,49 +36,49 @@ with app.app_context():
     # Add lectures to each week
     lectures = [
         # Week 1, Course 1
-        Lecture(title='Introduction to Python', lecture_url='https://www.youtube.com/watch?v=rfscVS0vtbw', week_id=1),
-        Lecture(title='Python Variables', lecture_url='https://www.youtube.com/watch?v=nhpQIwa9VNg', week_id=1),
-        Lecture(title='Python Data Types', lecture_url='https://www.youtube.com/watch?v=8O5kXJke7Vg', week_id=1),
+        Lecture(title='Introduction', lecture_url='https://youtu.be/8ndsDXohLMQ', week_id=1),
+        Lecture(title='A Quick Introduction to Variables', lecture_url='https://youtu.be/Yg6xzi2ie5s', week_id=1),
+        Lecture(title='Variables and Input Statement', lecture_url='https://youtu.be/ruQb8jzkGyQ', week_id=1),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=1),
         # Week 2, Course 1
-        Lecture(title='Python Control Flow', lecture_url='https://www.youtube.com/watch?v=sxTmJE4k0ho', week_id=2),
-        Lecture(title='Python Functions', lecture_url='https://www.youtube.com/watch?v=9Os0o3wzS_I', week_id=2),
-        Lecture(title='Python Modules', lecture_url='https://www.youtube.com/watch?v=6r7G5a6r34s', week_id=2),
+        Lecture(title='Introduction', lecture_url='https://youtu.be/aEPFZSzZ6VQ', week_id=2),
+        Lecture(title='Variables : A Programmers Perspective', lecture_url='https://youtu.be/XZSnqseRbZY', week_id=2),
+        Lecture(title='Variables Revisited: Dynamic Typing', lecture_url='https://youtu.be/2OFZY77eOjw', week_id=2),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=2),
         # Week 3, Course 1
-        Lecture(title='Python Classes', lecture_url='https://www.youtube.com/watch?v=ZDa-Z5JzLYM', week_id=3),
-        Lecture(title='Python Inheritance', lecture_url='https://www.youtube.com/watch?v=RSl87lqOXDE', week_id=3),
-        Lecture(title='Python Standard Library', lecture_url='https://www.youtube.com/watch?v=DPD_PpVsR2Q', week_id=3),
+        Lecture(title='Introduction', lecture_url='https://youtu.be/xiEzc_m2izc', week_id=3),
+        Lecture(title='Introduction to while loop', lecture_url='https://youtu.be/KTvVNN7ia8o', week_id=3),
+        Lecture(title='While to Compute Factorial', lecture_url='https://youtu.be/-ZMw8D-Xapk', week_id=3),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=3),
         # Week 1, Course 2
-        Lecture(title='Advanced List Comprehensions', lecture_url='https://www.youtube.com/watch?v=3dt4OGnU5sM', week_id=4),
-        Lecture(title='Decorators in Python', lecture_url='https://www.youtube.com/watch?v=FsAPt_9Bf3U', week_id=4),
-        Lecture(title='Generators in Python', lecture_url='https://www.youtube.com/watch?v=bD05uGo_sVI', week_id=4),
+        Lecture(title='Deconstructing the Software Development Process - Introduction', lecture_url='https://youtu.be/hKm_rh1RTJQ', week_id=4),
+        Lecture(title='Thinking of Software in terms of Components', lecture_url='https://youtu.be/81BaOIrfvJA', week_id=4),
+        Lecture(title='Software Development Process - Requirement Specification', lecture_url='https://youtu.be/SU2CBhSFUUA', week_id=4),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=4),
         # Week 2, Course 2
-        Lecture(title='Context Managers', lecture_url='https://www.youtube.com/watch?v=-aKFBoZpiqA', week_id=5),
-        Lecture(title='Python Metaclasses', lecture_url='https://www.youtube.com/watch?v=2p6l5QWoivk', week_id=5),
-        Lecture(title='Concurrency in Python', lecture_url='https://www.youtube.com/watch?v=IEEhzQoKtQU', week_id=5),
+        Lecture(title='Software Requirements - Requirements Gathering and Analysis', lecture_url='https://youtu.be/6cjKDEoCvMc', week_id=5),
+        Lecture(title='Identifying Users and Requirements', lecture_url='https://youtu.be/L9-CUa0BlLk', week_id=5),
+        Lecture(title='Functional and Non-functional Requirements', lecture_url='https://youtu.be/CKGjkKXpCsw', week_id=5),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=5),
         # Week 3, Course 2
-        Lecture(title='Asyncio in Python', lecture_url='https://www.youtube.com/watch?v=tSLDcRkgTsY', week_id=6),
-        Lecture(title='Python Coroutines', lecture_url='https://www.youtube.com/watch?v=ZzfHjytDceU', week_id=6),
-        Lecture(title='Advanced Decorators', lecture_url='https://www.youtube.com/watch?v=MjHpMCIvwsY', week_id=6),
+        Lecture(title='Software User Interfaces - Introduction to Interaction Design', lecture_url='https://youtu.be/BOCF3RefE54', week_id=6),
+        Lecture(title='Usability goals', lecture_url='https://youtu.be/I1s8WWUMGQs', week_id=6),
+        Lecture(title='Prototyping Techniques', lecture_url='https://youtu.be/jQ_vO3xjFt0', week_id=6),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=6),
         # Week 1, Course 3
-        Lecture(title='Introduction to Numpy', lecture_url='https://www.youtube.com/watch?v=8yZMXCaFshs', week_id=7),
-        Lecture(title='Pandas Basics', lecture_url='https://www.youtube.com/watch?v=dcqPhpY7tWk', week_id=7),
-        Lecture(title='Data Visualization with Matplotlib', lecture_url='https://www.youtube.com/watch?v=3Xc3CA655Y4', week_id=7),
+        Lecture(title='Introduction', lecture_url='https://youtu.be/gu3dZL3KdH0', week_id=7),
+        Lecture(title='A Decade of Machine Learning', lecture_url='https://youtu.be/pfBXSOUnOtU', week_id=7),
+        Lecture(title='Human Cognitive Architecture', lecture_url='https://youtu.be/rtrAbWwr1zc', week_id=7),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=7),
         # Week 2, Course 3
-        Lecture(title='Advanced Pandas', lecture_url='https://www.youtube.com/watch?v=5JnMutdy6Fw', week_id=8),
-        Lecture(title='Scikit-learn for Machine Learning', lecture_url='https://www.youtube.com/watch?v=0Lt9w-BxKFQ', week_id=8),
-        Lecture(title='Deep Learning with TensorFlow', lecture_url='https://www.youtube.com/watch?v=tPYj3fFJGjk', week_id=8),
+        Lecture(title='State Space Search', lecture_url='https://youtu.be/uutThFRNO0E', week_id=8),
+        Lecture(title='General Search Algorithms', lecture_url='https://youtu.be/nxeoZkr0k6U', week_id=8),
+        Lecture(title='Planning Problems, Configuration Problems', lecture_url='https://youtu.be/fTPrAci0WWA', week_id=8),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=8),
         # Week 3, Course 3
-        Lecture(title='Natural Language Processing', lecture_url='https://www.youtube.com/watch?v=8vwoGXzHwDk', week_id=9),
-        Lecture(title='Time Series Analysis', lecture_url='https://www.youtube.com/watch?v=wp0vBnN0k3s', week_id=9),
-        Lecture(title='Model Deployment', lecture_url='https://www.youtube.com/watch?v=cchIa2SU69U', week_id=9),
+        Lecture(title='Heuristic Search', lecture_url='https://youtu.be/HyL-q5c4Bek', week_id=9),
+        Lecture(title='Hill Climbing', lecture_url='https://youtu.be/9vjG9SoIqsI', week_id=9),
+        Lecture(title='Algorithm Demos', lecture_url='https://youtu.be/N654Npk8K5A', week_id=9),
         Lecture(title='Graded Programming Assignment', lecture_url='', week_id=9)
     ]
 
