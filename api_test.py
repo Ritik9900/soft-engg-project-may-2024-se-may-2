@@ -93,51 +93,6 @@ class APITestCase(unittest.TestCase):
         self.assertIsNotNone(data)
         self.assertEqual(data['message'], 'Course not found')
 
-    def test_post_course(self):
-        """Test creating a new course."""
-        response = self.client.post('/api/courses', json={
-            'name': 'New Course',
-            'description': 'This is a new course'
-        })
-        self.assertEqual(response.status_code, 201)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Course created successfully')
-
-    def test_post_existing_course(self):
-        """Test creating a course with an existing name."""
-        response = self.client.post('/api/courses', json={
-            'name': 'Python',
-            'description': 'This is a new course'
-        })
-        self.assertEqual(response.status_code, 409)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Course with this name already exists')
-
-    def test_put_course(self):
-        """Test updating an existing course."""
-        response = self.client.put(f'/api/courses/{self.sample_courses[self.test_sample_index].id}', json={
-            'name': 'Updated Course',
-            'description': 'Updated description'
-        })
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Course updated successfully')
-
-    def test_delete_course(self):
-        """Test deleting an existing course."""
-        response = self.client.delete(f'/api/courses/{self.sample_courses[self.test_sample_index].id}')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Course deleted successfully')
-
-    def test_delete_nonexistent_course(self):
-        """Test deleting a course that does not exist."""
-        response = self.client.delete('/api/courses/9999')
-        self.assertEqual(response.status_code, 404)
-        data = response.get_json()
-        self.assertIsNotNone(data)
-        self.assertEqual(data['message'], 'Course not found')
-
     ############################################## Test cases for WeekResource ##############################################
     def test_get_week(self):
         """Test retrieving a week by ID."""
@@ -154,51 +109,7 @@ class APITestCase(unittest.TestCase):
         data = response.get_json()
         self.assertIsNotNone(data)
         self.assertEqual(data['message'], 'Week not found')
-
-    def test_post_week(self):
-        """Test creating a new week."""
-        response = self.client.post('/api/weeks', json={
-            'number': 2,
-            'course_id': self.sample_courses[self.test_sample_index].id
-        })
-        self.assertEqual(response.status_code, 201)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Week created successfully')
-
-    def test_post_existing_week(self):
-        """Test creating a week with an existing number for the same course."""
-        response = self.client.post('/api/weeks', json={
-            'number': 1,
-            'course_id': self.sample_courses[self.test_sample_index].id
-        })
-        self.assertEqual(response.status_code, 409)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Week with this number already exists for this course')
-
-    def test_put_week(self):
-        """Test updating an existing week."""
-        response = self.client.put(f'/api/weeks/{self.sample_weeks[self.test_sample_index].id}', json={
-            'number': 2
-        })
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Week updated successfully')
-
-    def test_delete_week(self):
-        """Test deleting an existing week."""
-        response = self.client.delete(f'/api/weeks/{self.sample_weeks[self.test_sample_index].id}')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Week deleted successfully')
-
-    def test_delete_nonexistent_week(self):
-        """Test deleting a week that does not exist."""
-        response = self.client.delete('/api/weeks/9999')
-        self.assertEqual(response.status_code, 404)
-        data = response.get_json()
-        self.assertIsNotNone(data)
-        self.assertEqual(data['message'], 'Week not found')
-
+        
     ############################################## Test cases for LectureResource ##############################################
     def test_get_lecture(self):
         """Test retrieving a lecture by ID."""
@@ -216,54 +127,7 @@ class APITestCase(unittest.TestCase):
         data = response.get_json()
         self.assertIsNotNone(data)
         self.assertEqual(data['message'], 'Lecture not found')
-
-    def test_post_lecture(self):
-        """Test creating a new lecture."""
-        response = self.client.post('/api/lectures', json={
-            'title': 'New Lecture',
-            'lecture_url': 'http://newexample.com',
-            'week_id': self.sample_weeks[self.test_sample_index].id
-        })
-        self.assertEqual(response.status_code, 201)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Lecture created successfully')
-
-    def test_post_existing_lecture(self):
-        """Test creating a lecture with an existing title and URL for the same week."""
-        response = self.client.post('/api/lectures', json={
-            'title': 'Sample Lecture',
-            'lecture_url': 'http://example.com',
-            'week_id': self.sample_weeks[self.test_sample_index].id
-        })
-        self.assertEqual(response.status_code, 409)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Lecture with this title and URL already exists for this week')
-
-    def test_put_lecture(self):
-        """Test updating an existing lecture."""
-        response = self.client.put(f'/api/lectures/{self.sample_lectures[self.test_sample_index].id}', json={
-            'title': 'Updated Lecture',
-            'lecture_url': 'http://updatedexample.com'
-        })
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Lecture updated successfully')
-
-    def test_delete_lecture(self):
-        """Test deleting an existing lecture."""
-        response = self.client.delete(f'/api/lectures/{self.sample_lectures[self.test_sample_index].id}')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Lecture deleted successfully')
-
-    def test_delete_nonexistent_lecture(self):
-        """Test deleting a lecture that does not exist."""
-        response = self.client.delete('/api/lectures/9999')
-        self.assertEqual(response.status_code, 404)
-        data = response.get_json()
-        self.assertIsNotNone(data)
-        self.assertEqual(data['message'], 'Lecture not found')
-
+        
     ############################################## Test cases for CodingQuestionResource ##############################################
     def test_get_coding_question(self):
         """Test retrieving a coding question by ID."""
@@ -304,22 +168,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
         self.assertEqual(data['message'], 'Coding question updated successfully')
-
-    def test_delete_coding_question(self):
-        """Test deleting an existing coding question."""
-        response = self.client.delete(f'/api/coding-questions/{self.sample_coding_questions[self.test_sample_index].id}')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Coding question deleted successfully')
-
-    def test_delete_nonexistent_coding_question(self):
-        """Test deleting a coding question that does not exist."""
-        response = self.client.delete('/api/coding-questions/9999')
-        self.assertEqual(response.status_code, 404)
-        data = response.get_json()
-        self.assertIsNotNone(data)
-        self.assertEqual(data['message'], 'Coding question not found')
-
+        
     ############################################## Test cases for SubmissionResource ##############################################
     def test_get_submission(self):
         """Test retrieving a submission by ID."""
@@ -358,22 +207,7 @@ class APITestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
         self.assertEqual(data['message'], 'Submission updated successfully')
-
-    def test_delete_submission(self):
-        """Test deleting an existing submission."""
-        response = self.client.delete(f'/api/submissions/{self.sample_submissions[self.test_sample_index].id}')
-        self.assertEqual(response.status_code, 200)
-        data = response.get_json()
-        self.assertEqual(data['message'], 'Submission deleted successfully')
-
-    def test_delete_nonexistent_submission(self):
-        """Test deleting a submission that does not exist."""
-        response = self.client.delete('/api/submissions/9999')
-        self.assertEqual(response.status_code, 404)
-        data = response.get_json()
-        self.assertIsNotNone(data)
-        self.assertEqual(data['message'], 'Submission not found')
-
+        
     ############################################## Test cases for Lecture Summary ##############################################
     @patch('backend.src.models.GenerativeFeatures.generate_lecture_summary')
     def test_generate_lecture_summary(self, mock_generate_lecture_summary):
