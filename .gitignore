@@ -1,1 +1,17 @@
 .vir
+
+# envirnament variables
+.env
+
+# __pycache__
+
+**/__pycache__
+
+#logfile
+record.log
+
+#pytest cache
+.pytest_cache
+
+# virtual env
+venv

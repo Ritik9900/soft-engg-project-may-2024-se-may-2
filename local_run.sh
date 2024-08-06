@@ -15,5 +15,6 @@ fi
 # Activate virtual env
 . .env/bin/activate
 export ENV=development
+python3 add_dummy_data.py
 python3 app.py
 deactivate
