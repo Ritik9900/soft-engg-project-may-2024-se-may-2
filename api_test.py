@@ -1,6 +1,11 @@
 import unittest
 from app import start_app
 from backend.models import db, Course, Week, Lecture, CodingQuestion, Submission
+from unittest.mock import patch, MagicMock
+from backend.src.models import GenerativeFeatures
+
+from flask import Flask, json
+from backend import views
 
 class APITestCase(unittest.TestCase):
     def setUp(self):
@@ -62,14 +67,14 @@ class APITestCase(unittest.TestCase):
 
         print('Dummy data added successfully!')
 
+        #Set up the GenerativeFeatures instance and mock dependencies.
+        self.gen_features = GenerativeFeatures()
+
     def tearDown(self):
         """Clean up the database after each test."""
-        # db.session.remove()
-        # db.drop_all()
-        # self.app_context.pop()
-
-    def test_test(self):
-        self.assertEqual('a','a')
+        db.session.remove()
+        db.drop_all()
+        self.app_context.pop()
 
     ############################################## Test cases for CourseResource ##############################################
     def test_get_course(self):
@@ -368,3 +373,14 @@ class APITestCase(unittest.TestCase):
         data = response.get_json()
         self.assertIsNotNone(data)
         self.assertEqual(data['message'], 'Submission not found')
+
+    ############################################## Test cases for Lecture Summary ##############################################
+    @patch('backend.src.models.GenerativeFeatures.generate_lecture_summary')
+    def test_generate_lecture_summary(self, mock_generate_lecture_summary):
+        """Test generating lecture summary."""
+        mock_generate_lecture_summary.return_value = 'summary text'
+        response = self.client.post('/api/lecture-summary', json={'videoUrl': 'https://youtu.be/jQ_vO3xjFt0?si=OBucznx9N6eHr5jp'})
+        self.assertEqual(response.status_code, 200)
+        data = response.get_json()
+        self.assertEqual(data['summary'], 'summary text')
+        mock_generate_lecture_summary.assert_called_once_with('https://youtu.be/jQ_vO3xjFt0?si=OBucznx9N6eHr5jp')
