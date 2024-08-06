@@ -39,9 +39,7 @@
           <div v-else-if="isCodingLecture(selectedLecture)" class="coding-container">
             <CodingView :question="selectedCodingQuestion.content" />
           </div>
-          <button @click="fetchLectureSummary" :class="isCodingLecture(selectedLecture) ? 'compare-button' : 'summary-button'">
-            {{ isCodingLecture(selectedLecture) ? 'Compare AI' : 'Summary AI' }}
-          </button>
+          <button @click="fetchLectureSummary">summaryAI</button>
           <div class="summary-container">
             <h3>{{ isCodingLecture(selectedLecture) ? 'AI Comparison' : 'AI Summary' }}</h3>
             <p>{{ lectureSummary }}</p>
@@ -86,8 +84,6 @@
     </main>
   </div>
 </template>
-
-
 
 <script>
 /* eslint-disable */
@@ -216,6 +212,7 @@ export default {
   border-right: 1px solid #e9ecef;
   overflow-y: auto;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+
 }
 
 .course-title {
@@ -352,6 +349,29 @@ export default {
   height: 100%;
 }
 
+.summary-container {
+  width: 30%;
+  margin-left: 2%;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+}
+
+.summary-container h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #212529;
+  font-weight: 600;
+}
+
+.summary-container p {
+  color: #495057;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 .coding-container {
   position: relative;
   width: 65%;
@@ -367,49 +387,6 @@ export default {
   width: 100%;
   height: 300px; /* Adjust the height as needed */
   border: 1px solid #ccc;
-}
-
-.summary-container {
-  width: 30%;
-  margin-left: 2%;
-  padding: 16px;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  overflow-y: auto;
-  position: relative;
-}
-
-.summary-container .summary-button,
-.summary-container .compare-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.summary-container .summary-button:hover,
-.summary-container .compare-button:hover {
-  background-color: #0056b3;
-}
-
-.summary-container h3 {
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-  color: #212529;
-  font-weight: 600;
-}
-
-.summary-container p {
-  color: #495057;
-  font-size: 1rem;
-  line-height: 1.5;
 }
 
 .placeholder {
@@ -429,7 +406,6 @@ export default {
 .fade-enter-active, .fade-leave-active {
   transition: all 0.3s ease;
 }
-
 .fade-enter, .fade-leave-to {
   opacity: 0;
   transform: translateY(-10px);
@@ -458,6 +434,4 @@ export default {
     width: 100%;
   }
 }
-
-
 </style>

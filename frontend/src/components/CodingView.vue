@@ -7,6 +7,8 @@
       <div class="button-container">
         <button @click="runCode" class="btn btn-primary">Run Code</button>
         <button @click="submitCode" class="btn btn-success">Submit Code</button>
+        <button @click="compareAI">Compare AI</button>
+        <div v-if="codeFeedback">{{ codeFeedback }}</div>
         <transition name="fade">
           <div v-if="showPopup" class="popup">{{ popupMessage }}</div>
         </transition>
@@ -49,6 +51,8 @@ export default {
       output: '',
       popupMessage: '',
       showPopup: false,
+      codeFeedback: null,
+      submissionId: null,
       questionId: 1  // Set the ID of the coding question you want to fetch
     };
   },
@@ -70,6 +74,28 @@ export default {
     });
   },
   methods: {
+    async compareAI() {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/compare-ai', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            submission_id: this.submissionId
+          })
+        });
+        const result = await response.json();
+        if (response.ok) {
+          this.codeFeedback = result.message;
+        } else {
+          this.showPopupMessage(`Error: ${result.error}`);
+        }
+      }catch (error) {
+        console.error('Error comparing AI:', error);
+        this.showPopupMessage(`Error: ${error.message}`);
+      }
+    },
     async fetchCodingQuestion() {
       try {
         const response = await fetch(`http://127.0.0.1:5000/coding_question/${this.questionId}`);
@@ -122,6 +148,7 @@ export default {
         });
         const result = await response.json();
         if (response.ok) {
+          this.submissionId = result.id;
           this.showPopupMessage(result.message);
         } else {
           this.showPopupMessage(`Error: ${result.error}`);

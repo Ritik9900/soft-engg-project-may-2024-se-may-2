@@ -3,6 +3,9 @@ from flask import Blueprint, jsonify, request, render_template
 from .models import db, CodingQuestion, Submission
 import json
 from backend.src.models import GenerativeFeatures
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
 
 views = Blueprint('views', __name__)
 
@@ -21,6 +24,33 @@ def generate_lecture_summary():
     lecture_summary = generate.generate_lecture_summary(lecture_video)
     print(lecture_summary)
     return jsonify({'summary': lecture_summary})
+
+@views.route('/compare-ai', methods=['POST'])
+def compare_ai():
+    data = request.get_json()
+    submission_id = data.get('submission_id')
+    
+    # Log the submission_id
+    logging.debug(f"Received submission_id: {submission_id}")
+
+    if not submission_id:
+        return jsonify({'error': 'submission_id is required'}), 400
+
+    submission = Submission.query.get(submission_id)
+    if not submission:
+        return jsonify({'error': 'Submission not found'}), 404
+    
+    coding_question = CodingQuestion.query.get(submission.coding_question_id)
+    if not coding_question:
+        return jsonify({'error': 'Coding question not found'}), 404
+    
+    student_code = submission.code
+    solution_code = coding_question.solution
+
+    generate = GenerativeFeatures()
+    code_feedback = generate.generate_code_feedback(student_code, solution_code)
+
+    return jsonify({'code_feedback': code_feedback})
 
 @views.route('/coding_question/<int:question_id>', methods=['GET'])
 def get_coding_question(question_id):
