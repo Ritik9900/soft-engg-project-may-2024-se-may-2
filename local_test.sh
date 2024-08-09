@@ -17,5 +17,5 @@ fi
 export ENV=development
 # python3 add_dummy_data.py
 # python3 app.py
-python3 -m pytest api_test.py --disable-warnings
+python3 -m pytest api_test.py --disable-warnings -v
 deactivate
