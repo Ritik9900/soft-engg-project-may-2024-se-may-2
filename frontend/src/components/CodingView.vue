@@ -149,6 +149,7 @@ export default {
         const result = await response.json();
         if (response.ok) {
           this.submissionId = result.id;
+        
           this.showPopupMessage(result.message);
         } else {
           this.showPopupMessage(`Error: ${result.error}`);
