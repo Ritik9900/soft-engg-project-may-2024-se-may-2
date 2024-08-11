@@ -98,6 +98,7 @@ print(reverse_string({json.dumps(input_data)}))
 
     return jsonify(results)
 
+
 @views.route('/submit_code', methods=['POST'])
 def submit_code():
     data = request.get_json()
@@ -120,4 +121,7 @@ def submit_code():
         message = 'Submission received'
 
     db.session.commit()
-    return jsonify({'message': message}), 201
+    
+    # Return the ID of the submission
+    return jsonify({'message': message, 'id': submission.id}), 201
+
