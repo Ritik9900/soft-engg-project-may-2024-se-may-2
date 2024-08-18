@@ -1,0 +1,706 @@
+openapi: 3.0.3
+info:
+  title: Team-2 Course Management API
+  description: <h1>Software Engineering Project Milestone 4</h1> 
+    This API manages courses, weeks, lectures, coding questions, submissions, and provides AI-powered summary and comparison functionalities.
+    <h2>Task - API Endpoints Documentation</h2>
+    <h3>Team 2</h3>
+      <h3>Members
+      <ul><li>Ritik Ranjan (21f2001147)</li>
+      <li>Neeraj Kumar (21f1004926)</li>
+      <li>Harshjeet Kumar (21f2000689)</li>
+      <li>Satyaki Kumar (21f2001258)</li>
+      <li>Nitish Kumar (21f1001101)</li>
+      <li>Shweta Jha (21f2001336)</li>
+      <li>Abhinav Tiwari (22f1001616)</li>
+      </h3>
+      <h3> BS in Data Science & Applications</h3>
+      <h3> Indian Institute of Technology, Madras (IIT M)</h3>
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000
+    description: Localhost
+tags:
+  - name: Course
+    description: Course Management API
+  - name: Week
+    description: Week Management API
+  - name: Lecture
+    description: Lecture Management API
+  - name: CodingQuestion
+    description: Coding Question Management API
+  - name: Submission
+    description: Submission Management API
+  - name: AI
+    description: AI-powered functionalities
+paths:
+  /courses:
+    get:
+      summary: Get all courses
+      tags:
+        - Course
+      operationId: getCourses
+      responses:
+        '200':
+          description: Courses retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Course'
+    post:
+      summary: Create a new course
+      tags:
+        - Course
+      operationId: createCourse
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseInput'
+      responses:
+        '201':
+          description: Course created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '409':
+          description: Course with this name already exists
+  /courses/{course_id}:
+    get:
+      summary: Get a course by ID
+      tags:
+        - Course
+      operationId: getCourseById
+      parameters:
+        - in: path
+          name: course_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Course retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Course'
+        '404':
+          description: Course not found
+    put:
+      summary: Update a course by ID
+      tags:
+        - Course
+      operationId: updateCourse
+      parameters:
+        - in: path
+          name: course_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CourseInput'
+      responses:
+        '200':
+          description: Course updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Course not found
+    delete:
+      summary: Delete a course by ID
+      tags:
+        - Course
+      operationId: deleteCourse
+      parameters:
+        - in: path
+          name: course_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Course deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Course not found
+  /weeks:
+    get:
+      summary: Get all weeks
+      tags:
+        - Week
+      operationId: getWeeks
+      responses:
+        '200':
+          description: Weeks retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Week'
+    post:
+      summary: Create a new week
+      tags:
+        - Week
+      operationId: createWeek
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeekInput'
+      responses:
+        '201':
+          description: Week created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '409':
+          description: Week with this number already exists for this course
+  /weeks/{week_id}:
+    get:
+      summary: Get a week by ID
+      tags:
+        - Week
+      operationId: getWeekById
+      parameters:
+        - in: path
+          name: week_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Week retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Week'
+        '404':
+          description: Week not found
+    put:
+      summary: Update a week by ID
+      tags:
+        - Week
+      operationId: updateWeek
+      parameters:
+        - in: path
+          name: week_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WeekInput'
+      responses:
+        '200':
+          description: Week updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Week not found
+    delete:
+      summary: Delete a week by ID
+      tags:
+        - Week
+      operationId: deleteWeek
+      parameters:
+        - in: path
+          name: week_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Week deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Week not found
+  /lectures:
+    get:
+      summary: Get all lectures
+      tags:
+        - Lecture
+      operationId: getLectures
+      responses:
+        '200':
+          description: Lectures retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Lecture'
+    post:
+      summary: Create a new lecture
+      tags:
+        - Lecture
+      operationId: createLecture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LectureInput'
+      responses:
+        '201':
+          description: Lecture created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '409':
+          description: Lecture with this title and URL already exists for this week
+  /lectures/{lecture_id}:
+    get:
+      summary: Get a lecture by ID
+      tags:
+        - Lecture
+      operationId: getLectureById
+      parameters:
+        - in: path
+          name: lecture_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lecture retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Lecture'
+        '404':
+          description: Lecture not found
+    put:
+      summary: Update a lecture by ID
+      tags:
+        - Lecture
+      operationId: updateLecture
+      parameters:
+        - in: path
+          name: lecture_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LectureInput'
+      responses:
+        '200':
+          description: Lecture updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Lecture not found
+    delete:
+      summary: Delete a lecture by ID
+      tags:
+        - Lecture
+      operationId: deleteLecture
+      parameters:
+        - in: path
+          name: lecture_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lecture deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Lecture not found
+  /coding-questions:
+    get:
+      summary: Get all coding questions
+      tags:
+        - CodingQuestion
+      operationId: getCodingQuestions
+      responses:
+        '200':
+          description: Coding questions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CodingQuestion'
+    post:
+      summary: Create a new coding question
+      tags:
+        - CodingQuestion
+      operationId: createCodingQuestion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodingQuestionInput'
+      responses:
+        '201':
+          description: Coding question created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /coding-questions/{coding_question_id}:
+    get:
+      summary: Get a coding question by ID
+      tags:
+        - CodingQuestion
+      operationId: getCodingQuestionById
+      parameters:
+        - in: path
+          name: coding_question_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Coding question retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodingQuestion'
+        '404':
+          description: Coding question not found
+    put:
+      summary: Update a coding question by ID
+      tags:
+        - CodingQuestion
+      operationId: updateCodingQuestion
+      parameters:
+        - in: path
+          name: coding_question_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodingQuestionInput'
+      responses:
+        '200':
+          description: Coding question updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Coding question not found
+    delete:
+      summary: Delete a coding question by ID
+      tags:
+        - CodingQuestion
+      operationId: deleteCodingQuestion
+      parameters:
+        - in: path
+          name: coding_question_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Coding question deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Coding question not found
+  /submissions:
+    get:
+      summary: Get all submissions
+      tags:
+        - Submission
+      operationId: getSubmissions
+      responses:
+        '200':
+          description: Submissions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Submission'
+    post:
+      summary: Create a new submission
+      tags:
+        - Submission
+      operationId: createSubmission
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionInput'
+      responses:
+        '201':
+          description: Submission created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+  /submissions/{submission_id}:
+    get:
+      summary: Get a submission by ID
+      tags:
+        - Submission
+      operationId: getSubmissionById
+      parameters:
+        - in: path
+          name: submission_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Submission retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Submission'
+        '404':
+          description: Submission not found
+    put:
+      summary: Update a submission by ID
+      tags:
+        - Submission
+      operationId: updateSubmission
+      parameters:
+        - in: path
+          name: submission_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmissionInput'
+      responses:
+        '200':
+          description: Submission updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Submission not found
+    delete:
+      summary: Delete a submission by ID
+      tags:
+        - Submission
+      operationId: deleteSubmission
+      parameters:
+        - in: path
+          name: submission_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Submission deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '404':
+          description: Submission not found
+  /ai/summary:
+    post:
+      summary: Generate a summary for the provided content
+      tags:
+        - AI
+      operationId: generateSummary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+      responses:
+        '200':
+          description: Summary generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  summary:
+                    type: string
+  /ai/compare:
+    post:
+      summary: Compare two sets of content
+      tags:
+        - AI
+      operationId: compareContent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content1:
+                  type: string
+                content2:
+                  type: string
+      responses:
+        '200':
+          description: Comparison generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comparison:
+                    type: string
+components:
+  schemas:
+    Course:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    CourseInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    Week:
+      type: object
+      properties:
+        id:
+          type: integer
+        number:
+          type: integer
+        course_id:
+          type: integer
+    WeekInput:
+      type: object
+      required:
+        - number
+        - course_id
+      properties:
+        number:
+          type: integer
+        course_id:
+          type: integer
+    Lecture:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        url:
+          type: string
+        week_id:
+          type: integer
+    LectureInput:
+      type: object
+      required:
+        - title
+        - url
+        - week_id
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+        week_id:
+          type: integer
+    CodingQuestion:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+        week_id:
+          type: integer
+    CodingQuestionInput:
+      type: object
+      required:
+        - title
+        - description
+        - week_id
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        week_id:
+          type: integer
+    Submission:
+      type: object
+      properties:
+        id:
+          type: integer
+        student_id:
+          type: integer
+        coding_question_id:
+          type: integer
+        code:
+          type: string
+    SubmissionInput:
+      type: object
+      required:
+        - student_id
+        - coding_question_id
+        - code
+      properties:
+        student_id:
+          type: integer
+        coding_question_id:
+          type: integer
+        code:
+          type: string
+    Message:
+      type: object
+      properties:
+        message:
+          type: string
